@@ -1,5 +1,5 @@
 # rain
 A worthless project
 
-Compile by running the compile script
+Compile by running the compile script  
 Creates an executable
