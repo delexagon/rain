@@ -1,4 +1,4 @@
-#include "../h_files/hashmap.h"
+#include "hashmap.h"
 #include <stdlib.h>
 
 struct HashMap {

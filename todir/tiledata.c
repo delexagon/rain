@@ -1,4 +1,4 @@
-#include "../h_files/tiledata.h"
+#include "tiledata.h"
 #include <stdlib.h>
 #include <stdio.h>
 

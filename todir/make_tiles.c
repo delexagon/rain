@@ -1,4 +1,4 @@
-#include "../h_files/make_tiles.h"
+#include "make_tiles.h"
 #include <stdlib.h>
 
 

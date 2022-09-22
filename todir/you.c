@@ -1,11 +1,11 @@
-#include "../h_files/you.h"
+#include "you.h"
 #include <stdlib.h>
 
-#include "../h_files/object.h"
-#include "../h_files/visionmap.h"
-#include "../h_files/globals.h"
-#include "../h_files/magic.h"
-#include "../h_files/controller.h"
+#include "object.h"
+#include "visionmap.h"
+#include "globals.h"
+#include "magic.h"
+#include "controller.h"
 
 #include <stdio.h>
 
@@ -16,7 +16,7 @@ struct You {
 
 You* new__You(Tile* t) {
     You* you = malloc(sizeof(You));
-    you->obj = new__Object(t, '@');
+    you->obj = new__Object(new__Traverser(t), '@');
     add__Runner(UPDATER, you, update__You);
     return you;
 }
@@ -33,7 +33,7 @@ void update__You(void* obj) {
             char dir = get_dir(getch());
             if(dir != -1) {
                 acted = true;
-                new__Magic(tile__Object(you->obj), dir);
+                new__Magic(traverser__Object(you->obj), dir);
             }
         } else if(ch == 'q') {
             QUITTING_NOW = true;

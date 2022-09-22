@@ -1,4 +1,4 @@
-#include "../h_files/push_array.h"
+#include "push_array.h"
 #include <stdlib.h>
 
 

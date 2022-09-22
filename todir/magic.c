@@ -1,8 +1,8 @@
-#include "../h_files/magic.h"
+#include "magic.h"
 #include <stdlib.h>
 
-#include "../h_files/object.h"
-#include "../h_files/globals.h"
+#include "object.h"
+#include "globals.h"
 
 
 struct Magic {
@@ -10,7 +10,7 @@ struct Magic {
     char dir;
 };
 
-Magic* new__Magic(Tile* t, char dir) {
+Magic* new__Magic(Traverser t, char dir) {
     Magic* m = malloc(sizeof(Magic));
     m->obj = new__Object(t, '*');
     m->dir = dir;

@@ -1,5 +1,5 @@
-#include "../h_files/runner.h"
-#include "../h_files/push_array.h"
+#include "runner.h"
+#include "push_array.h"
 
 #include <stdlib.h>
 

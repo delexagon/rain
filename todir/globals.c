@@ -1,4 +1,4 @@
-#include "../h_files/globals.h"
+#include "globals.h"
 
 
 bool QUITTING_NOW = false;

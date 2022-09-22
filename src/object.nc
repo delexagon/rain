@@ -15,14 +15,19 @@ struct Object {
 };
 
 ##<Object>
-Object* new(Tile* t, char chr) {
+Object* new(Traverser t, char chr) {
     Object* o = malloc(sizeof(Object));
-    o->t = create__traverser(t);
+    o->t = t;
     o->chr = chr;
-    if(t != NULL) {
-        data..t(t)->chr = chr;
+    if(t.tile != NULL) {
+        data..t(t.tile)->chr = chr;
     }
     return o;
+}
+
+##<Object> func
+Traverser traverser() {
+    return self->t;
 }
 
 ##<Object> func

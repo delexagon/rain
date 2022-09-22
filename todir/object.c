@@ -1,9 +1,9 @@
-#include "../h_files/object.h"
+#include "object.h"
 #include <stdlib.h>
 
-#include "../h_files/tiledata.h"
-#include "../h_files/visionmap.h"
-#include "../h_files/runner.h"
+#include "tiledata.h"
+#include "visionmap.h"
+#include "runner.h"
 
 
 struct Object {
@@ -11,14 +11,18 @@ struct Object {
     char chr;
 };
 
-Object* new__Object(Tile* t, char chr) {
+Object* new__Object(Traverser t, char chr) {
     Object* o = malloc(sizeof(Object));
-    o->t = create__traverser(t);
+    o->t = t;
     o->chr = chr;
-    if(t != NULL) {
-        data__Tile(t)->chr = chr;
+    if(t.tile != NULL) {
+        data__Tile(t.tile)->chr = chr;
     }
     return o;
+}
+
+Traverser traverser__Object(Object* self) {
+    return self->t;
 }
 
 Tile* tile__Object(Object* self) {

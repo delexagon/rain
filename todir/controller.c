@@ -1,6 +1,6 @@
-#include "../h_files/controller.h"
+#include "controller.h"
 
-#include "../h_files/term.h"
+#include "term.h"
 
 void init__terminal() {
     cons_init();

@@ -1,4 +1,4 @@
-#include "../h_files/term.h"
+#include "term.h"
 #include <termios.h>
 #include <unistd.h>
 #include <sys/ioctl.h>
@@ -51,7 +51,7 @@ void cons_die(int code) {
 }
 
 void cons_clear() {
-  printf("\x1b[2J");
+  printf("\x1b[0;0H\x1b[2J");
 }
 
 void cons_cursor_mode(int code) {

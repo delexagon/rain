@@ -1,4 +1,4 @@
-#include "../h_files/tiles.h"
+#include "tiles.h"
 #include <stdlib.h>
 
 
@@ -50,7 +50,7 @@ TileData* data__Tile(Tile* self) {
     return NULL;
 }
 
-Traverser create__traverser(Tile* tile) {
+Traverser new__Traverser(Tile* tile) {
     Traverser t;
     t.tile = tile;
     t.ab_is_lr = 0;

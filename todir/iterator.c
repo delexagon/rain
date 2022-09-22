@@ -1,4 +1,4 @@
-#include "../h_files/iterator.h"
+#include "iterator.h"
 #include <stdlib.h>
 
 struct Iterator {

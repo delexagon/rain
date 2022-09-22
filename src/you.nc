@@ -21,7 +21,7 @@ struct You {
 ##<You>
 You* new(Tile* t) {
     You* you = malloc(sizeof(You));
-    you->obj = new..o(t, '@');
+    you->obj = new..o(new__Traverser(t), '@');
     add..r(UPDATER, you, update__You);
     return you;
 }
@@ -39,7 +39,7 @@ void update(void* obj) {
             char dir = get_dir(getch());
             if(dir != -1) {
                 acted = true;
-                new..m(tile..o(you->obj), dir);
+                new..m(traverser..o(you->obj), dir);
             }
         } else if(ch == 'q') {
             QUITTING_NOW = true;

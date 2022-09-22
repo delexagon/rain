@@ -18,11 +18,6 @@ class Replacer:
                     replaced = True
         return line
 
-#THIS REQUIRES DIRECTORY STRUCTURE:
-#todir_path
-#todir_path/h_files
-#todir_path/c_files
-
 class FileData:
     def __init__(self):
         self.next_private = False
@@ -59,7 +54,7 @@ def conv_to_ch(line, filedata):
         elif "include" in line:
             fname = re.findall(r"\".*\"", line)[0]
             fname = fname[1:-1]
-            return ("#include \"../h_files/"+fname+".h\"", None)
+            return ("#include \""+fname+".h\"", None)
         elif "requires" in line:
             fname = re.findall(r"\".*\"", line)[0]
             fname = fname[1:-1]
@@ -128,8 +123,8 @@ todir_path = sys.argv[3]
 h_file = re.sub(r"\.[^\.]*$", ".h", filename)
 c_file = re.sub(r"\.[^\.]*$", ".c", filename)
 
-h_path = todir_path+"/h_files/"+h_file
-c_path = todir_path+"/c_files/"+c_file
+h_path = todir_path+"/"+h_file
+c_path = todir_path+"/"+c_file
 
 with open(srcdir_path+"/"+filename) as f:
     h = open(h_path, "w+")
@@ -137,7 +132,7 @@ with open(srcdir_path+"/"+filename) as f:
     # write necessary data
     h.write("#ifndef __" + h_file.replace(".", "_") + "__\n")
     h.write("#define __" + h_file.replace(".", "_") + "__\n")
-    c.write("#include \"../h_files/" + h_file + "\"\n")
+    c.write("#include \"" + h_file + "\"\n")
     filedata = FileData()
     while line := f.readline():
         line = remn(line)

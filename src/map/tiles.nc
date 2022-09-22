@@ -70,7 +70,8 @@ TileData* data() {
     return NULL;
 }
 
-Traverser create__traverser(Tile* tile) {
+##<Traverser>
+Traverser new(Tile* tile) {
     Traverser t;
     t.tile = tile;
     t.ab_is_lr = 0;

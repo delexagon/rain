@@ -1,16 +1,16 @@
-#include "../h_files/main.h"
+#include "main.h"
 #include <stdlib.h>
 #include <time.h>
 #include <stdio.h>
 
-#include "../h_files/globals.h"
-#include "../h_files/you.h"
-#include "../h_files/tiles.h"
-#include "../h_files/visionmap.h"
-#include "../h_files/make_tiles.h"
-#include "../h_files/runner.h"
-#include "../h_files/object.h"
-#include "../h_files/controller.h"
+#include "globals.h"
+#include "you.h"
+#include "tiles.h"
+#include "visionmap.h"
+#include "make_tiles.h"
+#include "runner.h"
+#include "object.h"
+#include "controller.h"
 
 int main() {
     init__terminal();

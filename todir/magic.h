@@ -3,6 +3,6 @@
 #include "tiles.h"
 typedef struct Magic Magic;
 struct Magic;
-Magic* new__Magic(Tile* t, char dir);
+Magic* new__Magic(Traverser t, char dir);
 void update__Magic(void* p);
 #endif

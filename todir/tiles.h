@@ -18,7 +18,7 @@ struct Traverser {
 void free__Tile(void* t);
 Tile* new__Tile(Runner* cleaner);
 TileData* data__Tile(Tile* self);
-Traverser create__traverser(Tile* tile);
+Traverser new__Traverser(Tile* tile);
 void connect(Tile* tile1, uchar gate1, Tile* tile2, uchar gate2, uchar flip, Runner* cleaner);
 // Look at test2 for calibration
 // Preconditions: 0<=dir<4, all other variables = 0 or 1
