@@ -48,6 +48,16 @@ void* get__HashMap(HashMap* self, void* key) {
     return NULL;
 }
 
+void* remove__HashMap(HashMap* self, void* key) {
+    int hash = self->hashfunc(key) % self->bins;
+    for(int i = 0; self->keys[hash] != NULL; i++) {
+        if(key == self->keys[hash][i] || (self->eqfunc != NULL && self->eqfunc(self->keys[hash][i], key))) {
+            return self->items[hash][i];
+        }
+    }
+    return NULL;
+}
+
 void* set__HashMap(HashMap* self, void* key, void* item) {
     void*** keys = self->keys;
     void*** items = self->items;
@@ -99,9 +109,9 @@ void* first_itr__HashMap(HashMap* self) {
     return NULL;
 }
 
-void* next_itr__HashMap(HashMap* self, void* this, void* data) {
+void* next_itr__HashMap(HashMap* self, void* obj, void* data) {
     int* vals = (int*) data;
-    self = (HashMap*)(this);
+    self = (HashMap*)(obj);
     void*** keys = self->keys;
     for(int bin = vals[0]; bin < self->bins; bin++) {
         for(int i = vals[1]+1; self->keys[i] != NULL; i++) {
