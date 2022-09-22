@@ -1,8 +1,6 @@
 #include <stdlib.h>
 ##replace \.\.r-->>__Runner
 ##replace \.\.d-->>__TileData
-##r is Runner
-##d is TileData
 
 ##requires "tiledata"
 ##requires "runner"
@@ -11,8 +9,8 @@ typedef unsigned char uchar;
 
 typedef struct Edge Edge;
 typedef struct Tile Tile;
-typedef struct Traverser Traverser;
 
+##public
 struct Edge {
     Tile* tile1;
     Tile* tile2;
@@ -34,14 +32,6 @@ void print() {
         print..d(self->data);
     }
 }
-
-##public
-struct Traverser {
-    Tile* tile;
-    uchar ab_is_lr;
-    uchar ud_flipped;
-    uchar lr_flipped;
-};
 
 ##<Tile>
 void free(void* t) {
@@ -70,14 +60,9 @@ TileData* data() {
     return NULL;
 }
 
-##<Traverser>
-Traverser new(Tile* tile) {
-    Traverser t;
-    t.tile = tile;
-    t.ab_is_lr = 0;
-    t.ud_flipped = 0;
-    t.lr_flipped = 0;
-    return t;
+##<Tile> func
+Edge* edge(char gate_to) {
+    return self->gates[gate_to];
 }
 
 void connect(Tile* tile1, uchar gate1, Tile* tile2, uchar gate2, uchar flip, Runner* cleaner) {
@@ -95,53 +80,3 @@ void connect(Tile* tile1, uchar gate1, Tile* tile2, uchar gate2, uchar flip, Run
     tile2->gates[gate2] = e;
     add..r(cleaner, e, free);
 }
-
-// Look at test2 for calibration
-// Preconditions: 0<=dir<4, all other variables = 0 or 1
-uchar orientation_to_gate(uchar dir, uchar ab_is_lr, uchar ud_flipped, uchar lr_flipped) {
-    uchar flipped = (dir/2==0)*ud_flipped+(dir/2==1)*lr_flipped;
-    return ab_is_lr*2+flipped+dir-(2*((dir%2)&flipped))-(4*((dir/2)&ab_is_lr));
-}
-
-// dir: 0 up, 1 down, 2 left, 3 right
-// Look as test2 for calibration. The boolean algebra should be correct.
-Traverser travel(Traverser t, uchar dir) {
-    const Tile* ti = t.tile;
-    Traverser new_t = t;
-    Tile* tile = NULL;
-    if(ti == NULL) {
-        new_t.tile = NULL;
-        return new_t;
-    }
-    uchar gate_to = orientation_to_gate(dir, t.ab_is_lr, t.ud_flipped, t.lr_flipped);
-    Edge* e = ti->gates[gate_to];
-    
-    uchar gate_from = -1;
-    if(e == NULL) {
-        new_t.tile = NULL;
-        return new_t;
-    }
-    if(e->tile1 == ti && e->gate1 == gate_to) {
-        gate_from = e->gate2;
-        tile = e->tile2;
-    }
-    if(e->tile2 == ti && e->gate2 == gate_to) {
-        gate_from = e->gate1;
-        tile = e->tile1;
-    }
-    new_t.tile = tile;
-    if(gate_from == -1) {
-        return new_t;
-    }
-    new_t.ab_is_lr = gate_from/2!=dir/2;
-    uchar primary_flipped = gate_from%2==dir%2;
-    if(dir/2 == 0) {
-        new_t.ud_flipped = primary_flipped;
-        new_t.lr_flipped = e->flip!=t.lr_flipped;
-    } else {
-        new_t.lr_flipped = primary_flipped;
-        new_t.ud_flipped = e->flip!=t.ud_flipped;
-    }
-    return new_t;
-}
-

@@ -1,20 +1,24 @@
+##replace THIS_CLASS-->>PushArray
+##replace `-->>##<THIS_CLASS>
+##replace ~-->>self->
+##replace \.\.p-->>__PushArray
 #include <stdlib.h>
 
-typedef struct PushArray PushArray;
+typedef struct THIS_CLASS THIS_CLASS;
 
-struct PushArray {
+struct THIS_CLASS {
     void** array;
     int size;
     int alloc_size;
 };
 
-##<PushArray> func
+`func
 void free() {
     free(self->array);
     free(self);
 }
 
-##<PushArray>
+`
 PushArray* new() {
     PushArray* p = malloc(sizeof(PushArray));
     p->array = calloc(16, sizeof(void*));
@@ -23,12 +27,21 @@ PushArray* new() {
     return p;
 }
 
-##<PushArray> func
+`
+PushArray* sized_new(int n) {
+    PushArray* p = malloc(sizeof(PushArray));
+    p->array = calloc(n, sizeof(void*));
+    p->size = 0;
+    p->alloc_size = n;
+    return p;
+}
+
+`func
 int size() {
     return self->size;
 }
 
-##<PushArray> func
+`func
 void* get(int i) {
     if(i < 0 || i >= self->size) {
         return NULL;
@@ -36,7 +49,7 @@ void* get(int i) {
     return self->array[i];
 }
 
-##<PushArray> func
+`func
 void* set(int i, void* obj) {
     if(i < 0 || i >= self->size) {
         return NULL;
@@ -45,8 +58,8 @@ void* set(int i, void* obj) {
     return self->array[i];
 }
 
-##<PushArray> func
-void* append(void* obj) {
+`func
+void* add(void* obj) {
     self->array[self->size] = obj;
     self->size++;
     if(self->size >= self->alloc_size) {
@@ -57,3 +70,19 @@ void* append(void* obj) {
     return obj;
 }
 
+`func
+void* remove(void* obj) {
+    int i;
+    int size = ~size;
+    for(i = 0; i < size; i++) {
+        if(~array[i] == obj) {
+            for(; i < size; i++) {
+                ~array[i] = ~array[i+1];
+            }
+            ~array[size] = NULL;
+            ~size--;
+            return obj;
+        }
+    }
+    return NULL;
+}

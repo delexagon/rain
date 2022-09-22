@@ -27,7 +27,7 @@ void add(void* obj, void (*on_run)(void* obj)) {
     struct FuncObj* in = malloc(sizeof(struct FuncObj));
     in->obj = obj;
     in->on_run = on_run;
-    append..p(self->to_run, in);
+    add..p(self->to_run, in);
 }
 
 ##<Runner> func

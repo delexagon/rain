@@ -1,7 +1,7 @@
 #include <stdlib.h>
 ##replace \.\.t-->>__Tile
 
-##requires "tiles"
+##requires "traverser"
 
 #include <stdio.h>
 
@@ -96,9 +96,7 @@ void print__visionmap(int height, int width, Traverser t) {
     // Set tiles in array to vision.
     for(int row = 0; row < height; row++) {
         for(int col = 0; col < width; col++) {
-            if(row == center_row && col == center_col) {
-                printf("@");
-            } else if(array[row*width+col].tile != NULL) {
+            if(array[row*width+col].tile != NULL) {
                 print..t(array[row*width+col].tile);
             } else {
                 printf("#");

@@ -4,7 +4,7 @@
 
 ##include "object"
 ##include "globals"
-##requires "tiles"
+##requires "traverser"
 
 typedef struct Magic Magic;
 
