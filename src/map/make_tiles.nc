@@ -1,14 +1,13 @@
 ##replace \.\.t-->>__Tile
 #include <stdlib.h>
 
-##requires "runner"
 ##requires "tiles"
 
-Tile** make_room(int height, int width, Runner* cleaner) {
+Tile** make_room(int height, int width) {
     Tile** tiles = calloc(height*width, sizeof(Tile*));
     // Create the tiles
     for(int i = 0; i < height*width; i++) {
-        tiles[i] = new..t(cleaner);
+        tiles[i] = new..t();
     }
     // Create the edges
     for(int row = 0; row < height; row++) {
@@ -17,29 +16,29 @@ Tile** make_room(int height, int width, Runner* cleaner) {
             if(row > 0) {
                 // Connect gate 'a' of this tile (the a-b and c-d gates are paired) to gate 'b' of the tile above.
                 // By convention, in standard orientation gate 'a' is up, 'b' is down, 'c' is left, and 'd' is right.
-                connect(tiles[row*width+col], 0, tiles[(row-1)*width+col], 1, 0, cleaner);
+                connect(tiles[row*width+col], 0, tiles[(row-1)*width+col], 1, 0);
             }
             // Connect this to left
             if(col > 0) {
-                connect(tiles[row*width+col], 2, tiles[row*width+col-1], 3, 0, cleaner);
+                connect(tiles[row*width+col], 2, tiles[row*width+col-1], 3, 0);
             }
             // Connect this to below
             if(row < height-1) {
-                connect(tiles[row*width+col], 1, tiles[(row+1)*width+col], 0, 0, cleaner);
+                connect(tiles[row*width+col], 1, tiles[(row+1)*width+col], 0, 0);
             }
             // Connect this to right
             if(col < width-1) {
-                connect(tiles[row*width+col], 3, tiles[row*width+col+1], 2, 0, cleaner);
+                connect(tiles[row*width+col], 3, tiles[row*width+col+1], 2, 0);
             }
         }
     }
     return tiles;
 }
 
-Tile* make_hallway(Tile* tile1, char gate1, Tile* tile2, char gate2, Runner* cleaner) {
-    Tile* hallway = new..t(cleaner);
-    connect(tile1, gate1, hallway, 1, 0, cleaner);
-    connect(tile2, gate2, hallway, 0, 0, cleaner);
+Tile* make_hallway(Tile* tile1, char gate1, Tile* tile2, char gate2) {
+    Tile* hallway = new..t();
+    connect(tile1, gate1, hallway, 1, 0);
+    connect(tile2, gate2, hallway, 0, 0);
     return hallway;
 }
 

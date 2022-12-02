@@ -24,10 +24,10 @@ int main() {
     UPDATER = create..r();
     int height = 4;
     int width = 6;
-    Tile** room = make_room(height,width, cleaner);
-    make_hallway(room[width/2], 0, room[(height-1)*width+width/2-1], 1, cleaner);
-    make_hallway(room[width/2+1], 0, room[(height-1)*width+width/2], 1, cleaner);
-    make_hallway(room[width/2-1], 0, room[(height/2)*width], 2, cleaner);
+    Tile** room = make_room(height,width);
+    make_hallway(room[width/2], 0, room[(height-1)*width+width/2-1], 1);
+    make_hallway(room[width/2+1], 0, room[(height-1)*width+width/2], 1);
+    make_hallway(room[width/2-1], 0, room[(height/2)*width], 2);
     
     new__You(room[0]);
     free(room);

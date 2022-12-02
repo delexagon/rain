@@ -1,3 +1,7 @@
+##replace THIS_CLASS-->>Tile
+##replace `-->>##<THIS_CLASS>
+##replace ~-->>self->
+
 #include <stdlib.h>
 ##replace \.\.r-->>__Runner
 ##replace \.\.d-->>__TileData
@@ -12,47 +16,42 @@ typedef struct Tile Tile;
 
 ##public
 struct Edge {
-    Tile* tile1;
-    Tile* tile2;
+    Tile* tile;
     int mapid;
-    uchar gate1;
-    uchar gate2;
+    uchar gate;
     uchar flip;
 };
 
 struct Tile {
     TileData* data;
     // A,B,C,D
-    Edge** gates;
+    Edge gates[4];
 };
 
-##<Tile> func
+`func
 void print() {
     if(self->data != NULL) {
         print..d(self->data);
     }
 }
 
-##<Tile>
+`
 void free(void* t) {
     Tile* tn = (Tile*) t;
-    free(tn->gates);
     free(tn->data);
     free(t);
 }
 
-##<Tile>
-Tile* new(Runner* cleaner) {
+`
+Tile* new() {
     Tile* t = malloc(sizeof(Tile));
-    t->gates = calloc(4,sizeof(Edge*));
     
     t->data = new..d();
     
-    add..r(cleaner, t, free__Tile);
     return t;
 }
 
-##<Tile> func
+`func
 TileData* data() {
     if(self != NULL) {
         return self->data;
@@ -60,23 +59,22 @@ TileData* data() {
     return NULL;
 }
 
-##<Tile> func
+`func
 Edge* edge(char gate_to) {
-    return self->gates[gate_to];
+    return &(~gates[gate_to]);
 }
 
-void connect(Tile* tile1, uchar gate1, Tile* tile2, uchar gate2, uchar flip, Runner* cleaner) {
+void connect(Tile* tile1, uchar gate1, Tile* tile2, uchar gate2, uchar flip) {
     // Do not connect if there is already a gate here
-    if(tile1->gates[gate1] != NULL || tile2->gates[gate2] != NULL) {
+    if(tile1->gates[gate1].mapid != 0 || tile2->gates[gate2].mapid != 0) {
         return;
     }
-    Edge* e = malloc(sizeof(Edge));
-    e->tile1 = tile1;
-    e->tile2 = tile2;
-    e->gate1 = gate1;
-    e->gate2 = gate2;
-    e->flip = flip;
-    tile1->gates[gate1] = e;
-    tile2->gates[gate2] = e;
-    add..r(cleaner, e, free);
+    tile1->gates[gate1].tile = tile2;
+    tile2->gates[gate2].tile = tile1;
+    tile1->gates[gate1].gate = gate2;
+    tile2->gates[gate2].gate = gate1;
+    tile1->gates[gate2].flip = flip;
+    tile2->gates[gate2].flip = flip;
+    tile1->gates[gate1].mapid = 1;
+    tile2->gates[gate2].mapid = 1;
 }
