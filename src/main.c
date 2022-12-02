@@ -12,6 +12,7 @@
 #include "runner.h"
 #include "object.h"
 #include "controller.h"
+#include "map.h"
 #include "mt19937_64.h"
 
 int main() {
@@ -22,16 +23,17 @@ int main() {
     
     time_t t;
     
+    Map* map = new__Map();
+    
     srand((unsigned) time(&t));
     
-    Runner* cleaner = create..r();
     UPDATER = create..r();
     int height = 4;
     int width = 6;
-    Tile** room = make_room(height,width);
-    make_hallway(room[width/2], 0, room[(height-1)*width+width/2-1], 1);
-    make_hallway(room[width/2+1], 0, room[(height-1)*width+width/2], 1);
-    make_hallway(room[width/2-1], 0, room[(height/2)*width], 2);
+    Tile** room = make_room(map, height,width);
+    make_hallway(map, room[width/2], 0, room[(height-1)*width+width/2-1], 1);
+    make_hallway(map, room[width/2+1], 0, room[(height-1)*width+width/2], 1);
+    make_hallway(map, room[width/2-1], 0, room[(height/2)*width], 2);
     
     new__You(room[0]);
     free(room);
@@ -39,9 +41,6 @@ int main() {
         run..r(UPDATER);
     }
     
-    
-    run..r(cleaner);
-    free..r(cleaner);
     printf("Exit.\n");
     return 0;
 }

@@ -1,13 +1,15 @@
 ##replace \.\.t-->>__Tile
+##replace \.\.m-->>__Map
 #include <stdlib.h>
 
+##requires "map"
 ##requires "tiles"
 
-Tile** make_room(int height, int width) {
+Tile** make_room(Map* map, int height, int width) {
     Tile** tiles = calloc(height*width, sizeof(Tile*));
     // Create the tiles
     for(int i = 0; i < height*width; i++) {
-        tiles[i] = new..t();
+        tiles[i] = gen_tile..m(map);
     }
     // Create the edges
     for(int row = 0; row < height; row++) {
@@ -35,8 +37,8 @@ Tile** make_room(int height, int width) {
     return tiles;
 }
 
-Tile* make_hallway(Tile* tile1, char gate1, Tile* tile2, char gate2) {
-    Tile* hallway = new..t();
+Tile* make_hallway(Map* map, Tile* tile1, char gate1, Tile* tile2, char gate2) {
+    Tile* hallway = gen_tile..m(map);
     connect(tile1, gate1, hallway, 1, 0);
     connect(tile2, gate2, hallway, 0, 0);
     return hallway;

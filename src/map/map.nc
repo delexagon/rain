@@ -20,6 +20,9 @@ struct Map {
 
 `func
 void free() {
+    for(int i = 0; i < size..p(~tiles); i++) {
+        free..t(get..p(~tiles, i));
+    }
     free..p(~tiles);
     free(self);
 }
@@ -30,4 +33,11 @@ Map* new() {
     this->id = int64__Rand();
     this->tiles = new..p();
     return this;
+}
+
+`func
+Tile* gen_tile() {
+    Tile* tile = new..t(~id);
+    add..p(~tiles, tile);
+    return tile;
 }

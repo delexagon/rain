@@ -16,12 +16,13 @@ typedef struct Tile Tile;
 ##public
 struct Edge {
     Tile* tile;
-    int mapid;
+    unsigned long long mapid;
     uchar gate;
     uchar flip;
 };
 
 struct Tile {
+    unsigned long long mapid;
     TileData* data;
     // A,B,C,D
     Edge gates[4];
@@ -41,8 +42,9 @@ void free() {
 }
 
 `
-Tile* new() {
+Tile* new(unsigned long long mapid) {
     Tile* t = malloc(sizeof(Tile));  
+    t->mapid = mapid;
     t->data = new..d();
     return t;
 }
@@ -71,6 +73,6 @@ void connect(Tile* tile1, uchar gate1, Tile* tile2, uchar gate2, uchar flip) {
     tile2->gates[gate2].gate = gate1;
     tile1->gates[gate2].flip = flip;
     tile2->gates[gate2].flip = flip;
-    tile1->gates[gate1].mapid = 1;
-    tile2->gates[gate2].mapid = 1;
+    tile1->gates[gate1].mapid = tile2->mapid;
+    tile2->gates[gate2].mapid = tile1->mapid;
 }
