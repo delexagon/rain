@@ -22,10 +22,12 @@ class FileData:
     def __init__(self):
         self.next_private = False
         self.next_public = False
+        self.in_comment = False
         self.vars = False
         self.next_class = None
         self.type = None
         self.noh = False
+        self.ignore = False
         self.replacer = Replacer()
     
     def needs_processing(self):
@@ -38,6 +40,10 @@ class FileData:
     
 # c, h
 def conv_to_ch(line, filedata):
+    if filedata.in_comment:
+        if len(line) > 1 and line[0] == '*' and line[1] == '/':
+            filedata.in_comment = False
+        return (None, line)
     line = preprocess(line)
     if "##" in line:
         # for modifying functions only
@@ -55,7 +61,7 @@ def conv_to_ch(line, filedata):
             fname = re.findall(r"\".*\"", line)[0]
             fname = fname[1:-1]
             return ("#include \""+fname+".h\"", None)
-        elif "requires" in line:
+        elif "require" in line:
             fname = re.findall(r"\".*\"", line)[0]
             fname = fname[1:-1]
             return (None, "#include \""+fname+".h\"")
@@ -67,11 +73,22 @@ def conv_to_ch(line, filedata):
             filedata.vars = False
         elif "vars" in line:
             filedata.vars = True
+        elif "unignore" in line:
+            filedata.ignore = False
+        elif "ignore" in line:
+            filedata.ignore = True
         elif "noh" in line:
             filedata.noh = True
         return (None, None)
     else:
+        if len(line) > 1 and line[0] == '/' and line[1] == '*':
+            filedata.in_comment = True
+            if "*/" in line:
+                filedata.in_comment = False
+            return (None, line)
         if filedata.noh:
+            return (line, None)
+        if filedata.ignore:
             return (line, None)
         if filedata.vars:
             return (line, "extern " + chopeq(line))
@@ -92,9 +109,8 @@ def preprocess(line):
     line = filedata.replacer.replace(line)
     if filedata.next_class != None and "##" not in line and len(line) > 3:
         ftype = line.split()[0]
-        fname = re.findall(r"[\w\d]+", line)[1]
         fparams = re.findall(r"\(.*\)", line)[0][1:-1]
-        fbegin = ftype + " " + fname + "__" + filedata.next_class + "("
+        fbegin = re.findall(r".*?\(", line)[0][:-1] + "__" + filedata.next_class + "("
         if filedata.type == "func":
             fbegin += filedata.next_class + "* self"
             if len(fparams) > 0:

@@ -6,10 +6,10 @@
 #include <stdlib.h>
 ##replace \.\.t-->>__Tile
 
-##requires "traverser"
-##requires "term"
+##require "traverser"
+##require "term"
+##require "tiles"
 ##include "tiledata"
-##requires "tiles"
 ##include "visionmap"
 ##include "runner"
 

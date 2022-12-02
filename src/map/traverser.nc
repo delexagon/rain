@@ -7,9 +7,9 @@ typedef struct Traverser Traverser;
 ##public
 struct Traverser {
     Tile* tile;
-    uchar ab_is_lr;
-    uchar ud_flipped;
-    uchar lr_flipped;
+    uchar ab_is_lr:1;
+    uchar ud_flipped:1;
+    uchar lr_flipped:1;
 };
 
 ##<Traverser>

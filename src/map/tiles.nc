@@ -3,7 +3,6 @@
 ##replace ~-->>self->
 
 #include <stdlib.h>
-##replace \.\.r-->>__Runner
 ##replace \.\.d-->>__TileData
 
 ##requires "tiledata"
@@ -35,19 +34,16 @@ void print() {
     }
 }
 
-`
-void free(void* t) {
-    Tile* tn = (Tile*) t;
-    free(tn->data);
-    free(t);
+`func
+void free() {
+    free(self->data);
+    free(self);
 }
 
 `
 Tile* new() {
-    Tile* t = malloc(sizeof(Tile));
-    
+    Tile* t = malloc(sizeof(Tile));  
     t->data = new..d();
-    
     return t;
 }
 
