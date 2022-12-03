@@ -33,12 +33,12 @@ uchar orientation_to_gate(uchar dir, uchar ab_is_lr, uchar ud_flipped, uchar lr_
 // dir: 0 up, 1 down, 2 left, 3 right
 // Look as test2 for calibration. The boolean algebra should be correct.
 Traverser travel(Traverser t, uchar dir) {
-    Tile* this_tile = t.tile;
     Traverser new_t = t;
-    if(this_tile == NULL) {
+    if(t.tile == NULL) {
         new_t.tile = NULL;
         return new_t;
     }
+    Tile* this_tile = t.tile;
     uchar gate_to = orientation_to_gate(dir, t.ab_is_lr, t.ud_flipped, t.lr_flipped);
     Edge* e = edge__Tile(this_tile, gate_to);
     

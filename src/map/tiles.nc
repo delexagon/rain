@@ -29,13 +29,6 @@ struct Tile {
 };
 
 `func
-CharS get_char() {
-    if(self->data != NULL) {
-        get_char..d(self->data);
-    }
-}
-
-`func
 void free() {
     free(self->data);
     free(self);
@@ -43,7 +36,7 @@ void free() {
 
 `
 Tile* new(unsigned long long mapid) {
-    Tile* t = malloc(sizeof(Tile));  
+    Tile* t = calloc(1, sizeof(Tile));  
     t->mapid = mapid;
     t->data = new..d();
     return t;

@@ -22,7 +22,7 @@ struct THIS_CLASS {
 
 `
 THIS_CLASS* new() {
-    THIS_CLASS* data = calloc(1,sizeof(THIS_CLASS*));
+    THIS_CLASS* data = calloc(1,sizeof(THIS_CLASS));
     data->objects = NULL;
     data->default_bg.r = rand()%50;
     data->default_bg.g = rand()%50+100;

@@ -41,11 +41,9 @@ struct StringS {
     int len;
 };
 
-##public
+##vars
 const struct ColorRGB BLACK = {   0,   0,   0 };
-##public
 const struct ColorRGB WHITE = { 255, 255, 255 };
-##public
 const struct Style DEFAULTSTYLE = { WHITE, BLACK, 0, 0, 0 };
-##public
 const struct CharS BLOCKEDTILE = { DEFAULTSTYLE, '#' };
+##endvars

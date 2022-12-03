@@ -3,14 +3,33 @@
 ##replace \[([^\]]*),([^\]]*)]-->>[(\1)*width+(\2)]
 
 ##require "traverser"
-##include "term"
+##include "intermediate_ui"
 
 #include <stdio.h>
 
 void print__visionmap(int height, int width, Traverser t) {
+    Traverser* array = calloc(width*height, sizeof(Traverser));
+    make_map_array(array, height, width, t);
+    CharS* area = malloc(sizeof(CharS)*width*height);
+    write_to__CharArea(array, area, height, width);
+    print__CharArea(area, height, width, (struct Boundary) { 0, 0, 20, 20 });
+    free(array);
+    free(area);
+}
+
+void write_to__CharArea(Traverser* array, CharS* area, int height, int width) {
+    for(int i = 0; i < height*width; i++) {
+        if(array[i].tile != NULL) {
+            area[i] = get_char__TileData(data__Tile(array[i].tile));
+        } else {
+            area[i] = BLOCKEDTILE;
+        }
+    }
+}
+
+void make_map_array(Traverser* array, int height, int width, Traverser t) {
     int center_col = width/2;
     int center_row = height/2;
-    Traverser* array = calloc(width*height, sizeof(Traverser));
     // Create center
     array[center_row, center_col] = t;
     // Scan outwards in lines from the center
@@ -71,7 +90,7 @@ void print__visionmap(int height, int width, Traverser t) {
             do_x = start_x;
             do_y = start_y;
             while(do_y != center_row && do_x >= 0 && do_x < width) {
-                //TODO: Note that if x and y refer to the same tile but in different orientations, this code will incorrectly 
+                //TODO: Note that if x and y refer to the same tile but in different orientations, this code will incorrectly
                 // prioritize the y result, leading to invalid tiles being shown.
                 if((do_t = travel(array[do_y, do_x-chx], dirx)).tile == travel(array[do_y-chy, do_x], diry).tile) {
                     array[do_y, do_x] = do_t;
@@ -95,17 +114,5 @@ void print__visionmap(int height, int width, Traverser t) {
             start_x += chx;
         }
     }
-    // Set tiles in array to vision.
-    for(int row = 0; row < height; row++) {
-        for(int col = 0; col < width; col++) {
-            if(array[row, col].tile != NULL) {
-                print..t(array[row, col].tile);
-            } else {
-                printf("#");
-            }
-        }
-        printf("\n");
-    }
-    free(array);
 }
 

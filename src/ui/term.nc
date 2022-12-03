@@ -115,7 +115,12 @@ void print_style(struct Style s) {
   if(s.bold) { itals[index++] = ';'; itals[index++] = '1'; }
   if(s.line) { itals[index++] = ';'; itals[index++] = '4'; }
   itals[index] = 0;
-  printf("\x1b[0%s;38;2;%d;%d;%d;48;2;%d;%d;%dm", itals, s.fg.r, s.fg.g, s.fg.b);
+  printf("\x1b[0%s;38;2;%d;%d;%d;48;2;%d;%d;%dm", itals, s.fg.r, s.fg.g, s.fg.b, s.bg.r, s.bg.g, s.bg.b);
+}
+
+void print_schar(const struct CharS* const c) {
+    print_style(c->style);
+    printf("%c", c->c);
 }
 
 void cons_move(int row, int col) {
