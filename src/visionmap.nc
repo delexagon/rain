@@ -2,7 +2,8 @@
 ##replace \.\.t-->>__Tile
 ##replace \[([^\]]*),([^\]]*)]-->>[(\1)*width+(\2)]
 
-##requires "traverser"
+##require "traverser"
+##include "term"
 
 #include <stdio.h>
 

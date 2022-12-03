@@ -16,7 +16,7 @@ struct Magic {
 ##<Magic>
 Magic* new(Traverser t, char dir) {
     Magic* m = malloc(sizeof(Magic));
-    m->obj = new..o(t, '*');
+    m->obj = new..o(t, (PartialCharS) { (CharS) { DEFAULTSTYLE, '*' }, 0 });
     m->dir = dir;
     
     add..r(UPDATER, m, update__Magic);

@@ -34,7 +34,7 @@ class FileData:
         return self.next_class
         
     def remperms(self, line):
-        if line[0] != ' ' and "{" not in line:
+        if line[0] != ' ' and ("{" not in line or ";" in line):
             self.next_private = False
             self.next_public = False
     

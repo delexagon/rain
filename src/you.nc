@@ -1,7 +1,7 @@
 #include <stdlib.h>
 
 ##include "object"
-##requires "tiles"
+##require "tiles"
 ##include "visionmap"
 ##include "globals"
 ##include "magic"
@@ -21,7 +21,7 @@ struct You {
 ##<You>
 You* new(Tile* t) {
     You* you = malloc(sizeof(You));
-    you->obj = new..o(new__Traverser(t), '@');
+    you->obj = new..o(new__Traverser(t), (PartialCharS) { (CharS) { DEFAULTSTYLE, '@' }, 0 });
     add..r(UPDATER, you, update__You);
     return you;
 }

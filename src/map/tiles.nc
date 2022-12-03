@@ -29,9 +29,9 @@ struct Tile {
 };
 
 `func
-void print() {
+CharS get_char() {
     if(self->data != NULL) {
-        print..d(self->data);
+        get_char..d(self->data);
     }
 }
 

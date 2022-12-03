@@ -1,0 +1,16 @@
+||| Set up c and h files
+fc=file.c
+fh=file.h
+
+||| Data style replacements
+##replace (.*)$--||1->repl(\1)
+##\<(.*)\>$--||1->data(class=\1)
+##\<(.*)\> ?(func)?$--||1->data(class=\1),2->data(func=true)
+##vars--||data(vars=true)
+##endvars--||data(vars=false)
+##noh--||rm(fh)
+
+||| C specific replacements
+##include \"(.*)\"$-->>#include \"\1.h\"->fc
+##require \"(.*)\"$-->>#include \"\1.h\"->fh
+||| No need for 'private' or 'public', just use 'static'

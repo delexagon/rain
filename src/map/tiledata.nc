@@ -6,6 +6,7 @@
 ##replace \.\.p-->>__PushArray
 
 ##requires "push_array"
+##requires "style_components"
 typedef struct Object Object;
 ##includes "object"
 
@@ -16,32 +17,39 @@ typedef struct THIS_CLASS THIS_CLASS;
 
 struct THIS_CLASS {
     PushArray* objects;
-    unsigned char bgr;
-    unsigned char bgg;
-    unsigned char bgb;
+    struct ColorRGB default_bg;
 };
 
 `
 THIS_CLASS* new() {
     THIS_CLASS* data = calloc(1,sizeof(THIS_CLASS*));
     data->objects = NULL;
-    data->bgr = rand()%50;
-    data->bgg = rand()%50+100;
-    data->bgb = rand()%50+25;
+    data->default_bg.r = rand()%50;
+    data->default_bg.g = rand()%50+100;
+    data->default_bg.b = rand()%50+25;
     return data;
 }
 
 `func
-void print() {
-    char chr;
-    if(~objects != NULL && size..p(~objects) > 0) {
-        chr = chr..o(get..p(~objects, 0));
-    } else {
-        chr = ' ';
+CharS get_char() {
+    CharS schar;
+    schar.c = ' ';
+    if(~objects == NULL || size..p(~objects) == 0) {
+        schar.style = DEFAULTSTYLE;
+        schar.style.bg = ~default_bg;
+        return schar;
     }
-    printf("\x1b[48;2;%d;%d;%dm", self->bgr,self->bgg, self->bgb);
-    printf("%c", chr);
-    printf("\x1b[0m");
+    schar = style..o(get..p(~objects, 0))->char_style;
+    int size = size..p(~objects);
+    for(int i = 0; i < size; i++) {
+        PartialCharS* sty = style..o(get..p(~objects, i));
+        if(sty->has_bg) {
+            schar.style.bg = sty->char_style.style.bg;
+            return schar;
+        }
+    }
+    schar.style.bg = ~default_bg;
+    return schar;
 }
 
 `func
@@ -79,3 +87,5 @@ void obj_move(TileData* other, Object* o) {
         }
     }
 }
+
+

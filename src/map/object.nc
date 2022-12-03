@@ -9,6 +9,7 @@
 ##require "traverser"
 ##require "term"
 ##require "tiles"
+##require "style_components"
 ##include "tiledata"
 ##include "visionmap"
 ##include "runner"
@@ -17,14 +18,14 @@ typedef struct THIS_CLASS THIS_CLASS;
 
 struct THIS_CLASS {
     Traverser t;
-    char chr;
+    PartialCharS style;
 };
 
 `
-THIS_CLASS* new(Traverser t, char chr) {
+THIS_CLASS* new(Traverser t, PartialCharS style) {
     THIS_CLASS* o = malloc(sizeof(THIS_CLASS));
     o->t = t;
-    o->chr = chr;
+    o->style = style;
     if(t.tile != NULL) {
         obj_add..td(data..t(t.tile), o);
     }
@@ -42,8 +43,8 @@ Tile* tile() {
 }
 
 `func
-char chr() {
-    return ~chr;
+PartialCharS* style() {
+    return &(~style);
 }
 
 `func
