@@ -5,8 +5,6 @@
 ##require "traverser"
 ##include "intermediate_ui"
 
-#include <stdio.h>
-
 void print__visionmap(int height, int width, Traverser t) {
     Traverser* array = calloc(width*height, sizeof(Traverser));
     make_map_array(array, height, width, t);

@@ -1,5 +1,4 @@
 
-#include <stdio.h>
 ##require "style_components"
 ##include "term"
 
@@ -30,4 +29,5 @@ void print__CharArea(CharS* chars, int field_height, int field_width, struct Bou
             }
         }
     }
+    reset_style();
 }

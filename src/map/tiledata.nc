@@ -11,7 +11,6 @@ typedef struct Object Object;
 ##includes "object"
 
 #include <stdlib.h>
-#include <stdio.h>
 
 typedef struct THIS_CLASS THIS_CLASS;
 
