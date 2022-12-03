@@ -1,5 +1,6 @@
 ##noh
 ##replace \.\.r-->>__Runner
+
 #include <stdlib.h>
 #include <time.h>
 #include <stdio.h>
@@ -27,7 +28,7 @@ int main() {
     
     srand((unsigned) time(&t));
     
-    UPDATER = create..r();
+    UPDATER = create__Runner();
     int height = 4;
     int width = 6;
     Tile** room = make_room(map, height,width);
@@ -38,7 +39,7 @@ int main() {
     new__You(room[0]);
     free(room);
     while(!QUITTING_NOW) {
-        run..r(UPDATER);
+        run__Runner(UPDATER);
     }
     
     printf("Exit.\n");
