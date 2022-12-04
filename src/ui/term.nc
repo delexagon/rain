@@ -86,6 +86,7 @@ void cons_init() {
   // turn off echoing typed keys, buffer until pressing enter
   t.c_lflag &= (~ECHO & ~ICANON);
   // load changed termios structure
+  // This is correct code, ignore the Valgrind error
   tcsetattr(1, TCSANOW, &t);
 
   // need to make sure the console returns to normal when done
