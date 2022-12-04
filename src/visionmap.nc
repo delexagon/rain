@@ -48,7 +48,7 @@ void make_map_array(Traverser* array, int height, int width, Traverser t) {
             chx =  1;
             chy =  0;
         }
-        while(x+chx >= 0 && x+chx < width && y+chy >= 0 && y+chy < height && array[y*width+x].tile != NULL) {
+        while(x+chx >= 0 && x+chx < width && y+chy >= 0 && y+chy < height) {
             x += chx;
             y += chy;
             array[y, x] = travel(array[y-chy, x-chx], i);
@@ -92,6 +92,8 @@ void make_map_array(Traverser* array, int height, int width, Traverser t) {
                 // prioritize the y result, leading to invalid tiles being shown.
                 if((do_t = travel(array[do_y, do_x-chx], dirx)).tile == travel(array[do_y-chy, do_x], diry).tile) {
                     array[do_y, do_x] = do_t;
+                } else {
+                    array[do_y, do_x].tile = NULL;
                 }
                 do_x += chx;
                 do_y -= chy;

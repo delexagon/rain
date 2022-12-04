@@ -35,6 +35,7 @@ struct MapViewData {
 ##private
 void draw__MapView(View* self, struct Boundary bound) {
     struct MapViewData* data = (struct MapViewData*)self->data;
+    print__CharArea(data->area, data->array_height, data->array_width, bound);
 }
 
 ##private

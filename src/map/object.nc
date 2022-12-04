@@ -61,9 +61,3 @@ char move(char direction) {
     self->t = t2;
     return 1;
 }
-
-`func
-void vision() {
-    cons_clear();
-    print__visionmap(31,31,self->t);
-}

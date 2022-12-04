@@ -6,6 +6,7 @@
 ##include "globals"
 ##include "magic"
 ##include "controller"
+##include "view"
 ##replace \.\.r-->>__Runner
 ##replace \.\.m-->>__Magic
 ##replace \.\.o-->>__Object
@@ -16,12 +17,14 @@ typedef struct You You;
 
 struct You {
     Object* obj;
+    View* view;
 };
 
 ##<You>
 You* new(Tile* t) {
     You* you = malloc(sizeof(You));
     you->obj = new..o(new__Traverser(t), (PartialCharS) { (CharS) { DEFAULTSTYLE, '@' }, 0 });
+    you->view = new__MapView(you->obj, 31, 31);
     add..r(UPDATER, you, update__You);
     return you;
 }
@@ -29,7 +32,7 @@ You* new(Tile* t) {
 ##<You>
 void update(void* obj) {
     You* you = (You*)obj;
-    vision..o(you->obj);
+    draw__View(you->view, (struct Boundary) { 0, 0, 20, 20 });
     bool acted = false;
     while(!acted) {
         int ch = getch();
